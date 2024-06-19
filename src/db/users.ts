@@ -2,8 +2,18 @@ import mongoose from 'mongoose';
 
 // User Config
 const UserSchema = new mongoose.Schema({
+  first_name: { type: String },
+  last_name: { type: String },
+  phone: { type: Number },
   email: { type: String, required: true },
   username: { type: String, required: true },
+  address: {
+    "street": { type: String },
+    "city": { type: String },
+    "state": { type: String },
+    "zip_code": { type: String },
+    "country": { type: String, },
+  },
   authentication: {
     password: { type: String, required: true, select: false },
     salt: { type: String, select: false },

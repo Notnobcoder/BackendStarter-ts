@@ -1,4 +1,4 @@
-import express from 'express';
+import express, { Request } from 'express';
 
 import { getUserByEmail, createUser } from '../db/users';
 import { authentication, random } from '../helpers';
@@ -18,7 +18,7 @@ export const login = async (req: express.Request, res: express.Response) => {
     }
 
     const expectedHash = authentication(user.authentication.salt, password);
-    
+
     if (user.authentication.password != expectedHash) {
       return res.sendStatus(403);
     }
@@ -28,7 +28,7 @@ export const login = async (req: express.Request, res: express.Response) => {
 
     await user.save();
 
-    res.cookie('ANTONIO-AUTH', user.authentication.sessionToken, { domain: 'localhost', path: '/' });
+    res.cookie('Ecom-AUTH', user.authentication.sessionToken, { httpOnly: true, domain: 'localhost', path: '/' });
 
     return res.status(200).json(user).end();
   } catch (error) {
@@ -46,7 +46,7 @@ export const register = async (req: express.Request, res: express.Response) => {
     }
 
     const existingUser = await getUserByEmail(email);
-  
+
     if (existingUser) {
       return res.sendStatus(400);
     }
@@ -67,3 +67,12 @@ export const register = async (req: express.Request, res: express.Response) => {
     return res.sendStatus(400);
   }
 }
+
+
+
+export const logout = async (req: express.Request, res: express.Response) => {
+  res.clearCookie("Ecom-AUTH");
+  return res.json({ "message": "Logout Succesfully" })
+
+}
+

@@ -1,7 +1,6 @@
-import express from 'express';
+import express, { NextFunction } from 'express';
 import { merge, get } from 'lodash';
-
-import { getUserBySessionToken } from '../db/users'; 
+import { getUserBySessionToken } from '../db/users';
 
 export const isAuthenticated = async (req: express.Request, res: express.Response, next: express.NextFunction) => {
   try {
@@ -45,3 +44,16 @@ export const isOwner = async (req: express.Request, res: express.Response, next:
     return res.sendStatus(400);
   }
 }
+
+
+// export const verifyToken = (req: express.Request, res: express.Response, next: NextFunction) => {
+//   const token = req.cookies["Ecom-AUTH"];
+//   if (!token) {
+//     return res.sendStatus(401).json({ "message": "unauthorized" })
+//   }
+//
+//   next
+//
+// }
+//
+//

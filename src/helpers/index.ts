@@ -7,3 +7,5 @@ export const authentication = (salt: string, password: string): string => {
 }
 
 export const random = () => crypto.randomBytes(128).toString('base64');
+
+
