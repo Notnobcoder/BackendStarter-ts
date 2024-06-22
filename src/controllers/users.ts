@@ -36,7 +36,7 @@ export const updateUser = async (req: express.Request, res: express.Response) =>
     }
 
     const user = await getUserById(id);
-    
+
     user.username = username;
     await user.save();
 
